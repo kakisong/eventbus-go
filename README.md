@@ -6,8 +6,6 @@
 
 由于是较为轻量级的应用，不想引入MQ这些外部实现，于是想到封装一个简单的实现。
 
-文中的代码都放在 [https://github.com/kakisong/eventbus-go](https://github.com/kakisong/eventbus-go)
-
 ## 设计
 
 由于goroutine天生的优势，所以在消息的转发过程会非常方便。
