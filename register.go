@@ -1,4 +1,4 @@
-package event
+package eventbus_go
 
 import (
 	"errors"
@@ -10,7 +10,7 @@ import (
 
 var (
 	registerMu sync.RWMutex
-	listeners  = make(map[string]map[string]interface{})
+	listeners  = make(map[string]map[string]reflect.Value)
 )
 
 // 监听注册
@@ -32,12 +32,12 @@ func Register(handlerFunc interface{}) error {
 			logrus.Errorf("方法 %s 已经被注册", funcName)
 			return errors.New("该方法已被注册")
 		}
-		funcMap[funcName] = handlerFunc
+		funcMap[funcName] = reflect.ValueOf(handlerFunc)
 		listeners[paramName] = funcMap
 		logrus.Infof("方法 %s 监听注册成功", funcName)
 	} else {
 		logrus.Infof("方法 %s 监听注册成功", funcName)
-		listeners[paramName] = map[string]interface{}{funcName: handlerFunc}
+		listeners[paramName] = map[string]reflect.Value{funcName: reflect.ValueOf(handlerFunc)}
 	}
 	return nil
 }

@@ -1,4 +1,4 @@
-package event
+package eventbus_go
 
 import (
 	. "github.com/smartystreets/goconvey/convey"
